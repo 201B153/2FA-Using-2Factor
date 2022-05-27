@@ -1,2 +1,1 @@
-npm install in backend before running frontend
-and then npm run start
+#npm install here and then run npm start

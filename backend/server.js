@@ -1,12 +1,9 @@
-// import express, { application } from 'express';
-// import mongoose from 'mongoose';
-// import dotenv from 'dotenv';
 require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
-// Validation
 const accountSid = process.env.ACCOUNT_SID;
 const authToken = process.env.AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
@@ -20,32 +17,12 @@ const JWT_AUTH_TOKEN = process.env.JWT_AUTH_TOKEN;
 const JWT_REFRESH_TOKEN = process.env.JWT_REFRESH_TOKEN;
 let refreshTokens = [];
 
-// Validation
-
-// mongoose
-//   .connect(process.env.MONGODB_URI)
-//   .then(() => {
-//     console.log('connected to db');
-//   })
-//   .catch((err) => {
-//     console.log(err.message);
-//   });
-
 const app = express();
 app.use(express.json());
 
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use(cookieParser());
 
-app.use((err, req, res, next) => {
-  res.status(500).send({ message: err.message });
-});
-// app.use(express.urlencoded({ extended: true }));
-// app.use('/api/seed', seedRouter);
-// app.use('/api/upload', uploadRouter);
-// app.use('/api/users', userRouter);
-
-// Validation
 app.post('/sendOTP', (req, res) => {
 	const phone = req.body.phone;
 	const otp = Math.floor(100000 + Math.random() * 900000);
@@ -110,9 +87,9 @@ app.post('/verifyOTP', (req, res) => {
 	}
 });
 
-app.post('/home', authenticateUser, (req, res) => {
-	console.log('home private route');
-	res.status(202).send('Private Protected Route - Home');
+app.post('/signup', authenticateUser, (req, res) => {
+	console.log('Register');
+	res.status(202).send('Register-Page');
 });
 
 async function authenticateUser(req, res, next) {
@@ -174,13 +151,6 @@ app.get('/logout', (req, res) => {
 		.clearCookie('refreshTokenID')
 		.send('logout');
 });
-// Validation
-
-//test -not to be used while using mongodb
-app.get('/api/users', (req, res) => {
-  res.send(data.Users);
-});
-
 const port = process.env.PORT || 5000 || 8888;
 app.listen(port, () => {
   console.log(`serve at http://localhost:${port}`);

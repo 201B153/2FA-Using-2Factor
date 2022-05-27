@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './styles/style.module.css';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function OtpVerify(props) {
 	axios.defaults.withCredentials = true;
@@ -26,9 +27,11 @@ function OtpVerify(props) {
 			.then(function(res) {
 				console.log(res.data);
 				window.location.reload();
+				toast.success({message: 'Your OTP has been verified'})
 			})
 			.catch(function(error) {
 				console.log(error.response.data);
+				toast.error({message: {error}})
 				setError({ ...error, error: error.response.data.msg });
 			});
 	};
