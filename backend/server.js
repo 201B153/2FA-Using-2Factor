@@ -87,9 +87,9 @@ app.post('/verifyOTP', (req, res) => {
 	}
 });
 
-app.post('/signup', authenticateUser, (req, res) => {
-	console.log('Register');
-	res.status(202).send('Register-Page');
+app.post('/home', authenticateUser, (req, res) => {
+	console.log('home');
+	res.status(202).send('home-Page');
 });
 
 async function authenticateUser(req, res, next) {
