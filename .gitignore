@@ -1,3 +1,5 @@
 node_modules
 php-backend
 .env
+tempory-folder-for-discarding
+dustbin.js
